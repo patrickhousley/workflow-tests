@@ -10,7 +10,7 @@ on:
     inputs:
       ref:
         description: 'Github branch ref to checkout and run tests on.'
-        required: true
+        required: false
         type: string
 
 jobs:
