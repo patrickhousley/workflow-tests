@@ -8,13 +8,15 @@ const branchName = process.env['GITHUB_REF'].replace('refs/heads/', '')
 console.log(github.context)
 
 const { data: pullRequests } = await octokit.rest.pulls.list({
+  owner: github.context.repo.owner,
+  repo: github.context.repo.repo,
   state: 'open',
-  head: `newrelic/newrelic-browser-agent:${branchName}`
+  head: `${github.context.repo.owner}/${github.context.repo.repo}:${branchName}`
 })
 
 if (!Array.isArray(pullRequests) || pullRequests.length === 0) {
   if (prRequired) {
-    throw new Error(`No pull request found for branch ${branchName} in the newrelic/newrelic-browser-agent repository.`)
+    throw new Error(`No pull request found for branch ${branchName} in the ${github.context.repo.owner}/${github.context.repo.repo} repository.`)
   } else {
     core.setOutput('results', JSON.stringify({}))
   }
