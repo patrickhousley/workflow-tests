@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/find-pull-request
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo $GITHUB_HEAD_REF
+      - run: git show --no-patch --format=%P
       - name: Upload pr code coverage
         if: ${{ steps.pull-request-target.outputs.results }}
         uses: codecov/codecov-action@v3
