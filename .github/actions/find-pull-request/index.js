@@ -22,10 +22,10 @@ if (!Array.isArray(pullRequests) || pullRequests.length === 0) {
 } else {
   console.log(JSON.stringify(pullRequests[0], null, 2))
   core.setOutput('results', JSON.stringify({
-    head: pullRequests[0].head.ref,
+    head_ref: pullRequests[0].head.ref,
     head_sha: pullRequests[0].head.sha,
-    base: pullRequests[0].base.ref,
+    base_ref: pullRequests[0].base.ref,
     base_sha: pullRequests[0].base.sha,
-    number: pullRequests[0].number
+    pr_number: pullRequests[0].number
   }))
 }
