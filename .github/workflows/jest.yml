@@ -28,7 +28,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ inputs.ref || github.ref }}
-          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
@@ -49,7 +48,7 @@ jobs:
         #   GITHUB_HEAD_REF: ${{ inputs.ref }}
         with:
           # commit_parent: ${{ fromJSON(steps.pull-request-target.outputs.results).head_sha }}
-          override_branch: ${{ fromJSON(steps.pull-request-target.outputs.results).base_ref }}
+          # override_branch: ${{ fromJSON(steps.pull-request-target.outputs.results).base_ref }}
           # override_commit: ${{ fromJSON(steps.pull-request-target.outputs.results).base_sha }}
           override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
           verbose: true
