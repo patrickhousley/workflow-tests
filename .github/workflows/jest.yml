@@ -4,7 +4,6 @@
 name: 'Jest: Unit Tests'
 
 on:
-  pull_request:
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -27,8 +26,8 @@ jobs:
       - name: Setup container
         run: apt update && apt install -y git
       - uses: actions/checkout@v3
-        # with:
-        #   ref: ${{ inputs.ref || github.ref }}
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
@@ -41,19 +40,16 @@ jobs:
         uses: ./.github/actions/find-pull-request
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Upload pr code coverage
-      #   if: ${{ steps.pull-request-target.outputs.results }}
-      #   uses: codecov/codecov-action@v3
-      #   env:
-      #     GITHUB_HEAD_REF: ${{ inputs.ref }}
-      #   with:
-      #     commit_parent: ${{ fromJSON(steps.pull-request-target.outputs.results).head_sha }}
-      #     override_branch: ${{ fromJSON(steps.pull-request-target.outputs.results).base_ref }}
-      #     override_commit: ${{ fromJSON(steps.pull-request-target.outputs.results).base_sha }}
-      #     override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
-      #     verbose: true
+      - name: Upload pr code coverage
+        if: ${{ steps.pull-request-target.outputs.results }}
+        uses: codecov/codecov-action@v3
+        env:
+          GITHUB_HEAD_REF: ${{ inputs.ref }}
+        with:
+          override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
+          verbose: true
       - name: Upload branch code coverage
-        # if: ${{ !steps.pull-request-target.outputs.results }}
+        if: ${{ !steps.pull-request-target.outputs.results }}
         uses: codecov/codecov-action@v3
         with:
           verbose: true
