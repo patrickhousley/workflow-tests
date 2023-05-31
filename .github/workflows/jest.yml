@@ -44,7 +44,10 @@ jobs:
         if: ${{ steps.pull-request-target.outputs.results }}
         uses: codecov/codecov-action@v3
         with:
+          override_branch: ${{ github.ref_name }}
+          override_commit: ${{ github.sha }}
           override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).number }}
+          verbose: true
       - name: Upload branch code coverage
         if: ${{ !steps.pull-request-target.outputs.results }}
         uses: codecov/codecov-action@v3
