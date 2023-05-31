@@ -44,13 +44,13 @@ jobs:
       - name: Upload pr code coverage
         if: ${{ steps.pull-request-target.outputs.results }}
         uses: codecov/codecov-action@v3
-        env:
-          GITHUB_HEAD_REF: ${{ inputs.ref }}
+        # env:
+        #   GITHUB_HEAD_REF: ${{ inputs.ref }}
         with:
           # commit_parent: ${{ fromJSON(steps.pull-request-target.outputs.results).head_sha }}
-          # override_branch: ${{ fromJSON(steps.pull-request-target.outputs.results).base_ref }}
+          override_branch: ${{ fromJSON(steps.pull-request-target.outputs.results).base_ref }}
           # override_commit: ${{ fromJSON(steps.pull-request-target.outputs.results).base_sha }}
-          # override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
+          override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
           verbose: true
       - name: Upload branch code coverage
         if: ${{ !steps.pull-request-target.outputs.results }}
