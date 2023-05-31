@@ -4,6 +4,7 @@
 name: 'Jest: Unit Tests'
 
 on:
+  pull_request:
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -50,7 +51,7 @@ jobs:
           # commit_parent: ${{ fromJSON(steps.pull-request-target.outputs.results).head_sha }}
           # override_branch: ${{ fromJSON(steps.pull-request-target.outputs.results).base_ref }}
           # override_commit: ${{ fromJSON(steps.pull-request-target.outputs.results).base_sha }}
-          override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
+          # override_pr: ${{ fromJSON(steps.pull-request-target.outputs.results).pr_number }}
           verbose: true
       - name: Upload branch code coverage
         if: ${{ !steps.pull-request-target.outputs.results }}

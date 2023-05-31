@@ -1,9 +1,6 @@
 name: 'Pull Request Checks'
 
 on:
-  push:
-    branch:
-    - test-pr
   workflow_dispatch:
 
 jobs:
