@@ -37,3 +37,5 @@ jobs:
     with:
       ref: 'refs/pull/${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).pr_number }}/merge'
     secrets: inherit
+    env:
+      GITHUB_HEAD_REF: 'refs/pull/${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).pr_number }}/merge'
