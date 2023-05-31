@@ -5,7 +5,6 @@ import * as github from '@actions/github'
 const prRequired = process.env['PR_REQUIRED']?.toLowerCase() === 'true'
 const octokit = github.getOctokit(process.env['GITHUB_TOKEN'])
 const branchName = process.env['GITHUB_REF'].replace('refs/heads/', '')
-console.log(github.context)
 
 const { data: pullRequests } = await octokit.rest.pulls.list({
   owner: github.context.repo.owner,
@@ -21,9 +20,12 @@ if (!Array.isArray(pullRequests) || pullRequests.length === 0) {
     core.setOutput('results', null)
   }
 } else {
+  console.log(JSON.stringify(pullRequests[0], null, 2))
   core.setOutput('results', JSON.stringify({
-    head: pullRequests[0].head.ref,
-    base: pullRequests[0].base.ref,
-    number: pullRequests[0].number
+    head_ref: pullRequests[0].head.ref,
+    head_sha: pullRequests[0].head.sha,
+    base_ref: pullRequests[0].base.ref,
+    base_sha: pullRequests[0].base.sha,
+    pr_number: pullRequests[0].number
   }))
 }
