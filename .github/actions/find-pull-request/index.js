@@ -8,8 +8,6 @@ const branchName = process.env['GITHUB_REF'].replace('refs/heads/', '')
 console.log(github.context)
 
 const { data: pullRequests } = await octokit.rest.pulls.list({
-  owner: 'newrelic',
-  repo: 'newrelic-browser-agent',
   state: 'open',
   head: `newrelic/newrelic-browser-agent:${branchName}`
 })
