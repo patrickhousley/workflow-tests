@@ -18,7 +18,7 @@ if (!Array.isArray(pullRequests) || pullRequests.length === 0) {
   if (prRequired) {
     throw new Error(`No pull request found for branch ${branchName} in the ${github.context.repo.owner}/${github.context.repo.repo} repository.`)
   } else {
-    core.setOutput('results', JSON.stringify({}))
+    core.setOutput('results', null)
   }
 } else {
   core.setOutput('results', JSON.stringify({
