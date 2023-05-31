@@ -41,7 +41,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload pr code coverage
-        if: ${{ steps.pull-request-target.outputs.results }}
+        if: ${{ fromJSON(needs.find-pull-request.outputs.pull-request-target) }}
         uses: codecov/codecov-action@v3
         with:
           override_pr: ${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).number }}
