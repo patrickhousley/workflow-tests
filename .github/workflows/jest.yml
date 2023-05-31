@@ -34,7 +34,7 @@ jobs:
       - name: Install project dependencies
         run: npm ci
       - name: Run unit tests
-        run: npm run test:coverage
+        run: npm run test -- --coverage
       - name: Find pull request
         id: pull-request-target
         uses: ./.github/actions/find-pull-request
