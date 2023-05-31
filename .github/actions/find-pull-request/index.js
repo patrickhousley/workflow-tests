@@ -5,6 +5,7 @@ import * as github from '@actions/github'
 const prRequired = process.env['PR_REQUIRED']?.toLowerCase() === 'true'
 const octokit = github.getOctokit(process.env['GITHUB_TOKEN'])
 const branchName = process.env['GITHUB_REF'].replace('refs/heads/', '')
+console.log(github.context)
 
 const { data: pullRequests } = await octokit.rest.pulls.list({
   owner: 'newrelic',
