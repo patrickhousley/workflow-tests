@@ -41,12 +41,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload pr code coverage
-        if: ${{ steps.pull-request-target.output }}
+        if: ${{ steps.pull-request-target.outputs }}
         uses: codecov/codecov-action@v3
         with:
-          override_pr: ${{ fromJSON(steps.pull-request-target.output).number }}
+          override_pr: ${{ fromJSON(steps.pull-request-target.outputs).number }}
       - name: Upload branch code coverage
-        if: ${{ !steps.pull-request-target.output }}
+        if: ${{ !steps.pull-request-target.outputs }}
         uses: codecov/codecov-action@v3
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
