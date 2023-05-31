@@ -13,30 +13,6 @@ on:
         type: string
 
 jobs:
-  on_workflow_dispatch:
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    name: 'Workflow Dispatch'
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:latest
-    defaults:
-      run:
-        shell: bash
-    outputs:
-      pull-request-target: ${{ steps.pull-request-target.outputs.results }}
-    steps:
-      - name: Setup container
-        run: apt update && apt install -y git
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
-      - name: Find pull request target
-        id: pull-request-target
-        uses: ./.github/actions/find-pull-request
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   unit:
     name: Run Jest
     runs-on: ubuntu-latest
@@ -59,9 +35,19 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npm run test:coverage
-      - uses: codecov/codecov-action@v3
+      - name: Find pull request
+        id: pull-request-target
+        uses: ./.github/actions/find-pull-request
         with:
-          override_pr: ${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).number || null }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload pr code coverage
+        if: ${{ steps.pull-request-target.outputs.results }}
+        uses: codecov/codecov-action@v3
+        with:
+          override_pr: ${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).number }}
+      - name: Upload branch code coverage
+        if: ${{ !steps.pull-request-target.outputs.results }}
+        uses: codecov/codecov-action@v3
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
