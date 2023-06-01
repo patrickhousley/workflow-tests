@@ -30,7 +30,7 @@ jobs:
   jest:
     name: Jest unit tests
     needs: find-pull-request
-    if: ${{ needs.find-pull-request.outputs.pull-request-target).pr_number }}
+    if: ${{ needs.find-pull-request.outputs.pull-request-target }}
     uses: ./.github/workflows/jest.yml
     with:
       ref: 'refs/pull/${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).pr_number }}/merge'
