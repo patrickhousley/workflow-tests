@@ -26,11 +26,11 @@ jobs:
         uses: ./.github/actions/find-pull-request
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          pr_required: true
 
   jest:
     name: Jest unit tests
     needs: find-pull-request
-    if: ${{ needs.find-pull-request.outputs.pull-request-target }}
     uses: ./.github/workflows/jest.yml
     with:
       ref: 'refs/pull/${{ fromJSON(needs.find-pull-request.outputs.pull-request-target).pr_number }}/merge'
