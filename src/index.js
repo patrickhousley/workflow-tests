@@ -1,4 +1,6 @@
 export function add(a, b) {
-    console.log('test')
     return a + b
+}
+export function sub(a, b) {
+    return a - b
 }
