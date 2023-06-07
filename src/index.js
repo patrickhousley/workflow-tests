@@ -1,6 +1,6 @@
 export function add(a, b) {
-    return a + b
+    return b + a
 }
 export function sub(a, b) {
-    return a - b
+    return b - a
 }
